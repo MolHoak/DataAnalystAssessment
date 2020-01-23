@@ -1,0 +1,35 @@
+---
+title: "Most Concerning Sites"
+output: html_document
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, fig.height=7, fig.width=15}
+#load packages
+library(rmarkdown)
+library(tidyverse)
+library(dbplyr)
+library(ggthemes)
+
+
+#clear working environment#
+rm(list=ls())
+
+#Import files
+data<-read.csv("sites.csv",header=T,sep=",")
+#replace population NA with 0 (would not normally do this)
+data$population[is.na(data$population)] <-0
+#replace NA with unknown
+data[is.na(data)] <-"unknown"
+#replace blanks with unknown
+data[data==""]<-"unknown"
+
+#filter data
+sites_concern <-filter(data, classification =="Most Concern")
+  
+#Graph most concerning sites by Population and Activity
+
+Most_Concerning <- ggplot(sites_concern, aes(x = activity, y = population)) +geom_bar(stat = "identity")
+
+Most_Concerning +ylab("Population")+xlab("Activity Type")+theme_classic()
+```
+
