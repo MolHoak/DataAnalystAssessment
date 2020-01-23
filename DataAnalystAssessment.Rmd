@@ -16,6 +16,7 @@ rm(list=ls())
 
 #Import files
 data<-read.csv("sites.csv",header=T,sep=",")
+#Making the data easy to work with (would not normally treat data this way)
 #replace population NA with 0 (would not normally do this)
 data$population[is.na(data$population)] <-0
 #replace NA with unknown
